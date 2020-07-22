@@ -1,15 +1,16 @@
 from django.shortcuts import render
+from webapp.models import To_Do_list
 
-def to_do(request):
-    if request.method =='GET':
-        return render(request, "index_to_do.html")
-    elif request.method == 'POST':
-        print(request.POST)
-        context = {
-            'first_namber': request.POST.get('first_namber', 0),
-            'second_namber': request.POST.get('second_namber', 0),
-            'do': request.POST.get('do', 0),
-            'rezalt': 0
-        }
 
-        return render(request, 'index_to_do.html', context)
+
+def task_list(request):
+    data = To_Do_list.objects.all()
+    return render(request, 'index_to_do.html', context={
+        'task_list': data
+    })
+
+def task_view(request):
+    task_id = request.GET.get('pk')
+    task = To_Do_list.objects.get(pk=task_id)
+    context = {'task': task}
+    return render(request, 'task.html', context)

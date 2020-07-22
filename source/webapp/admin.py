@@ -1,3 +1,5 @@
 from django.contrib import admin
+from webapp.models import To_Do_list
 
-# Register your models here.
+
+admin.site.register(To_Do_list)

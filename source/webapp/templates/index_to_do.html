@@ -10,6 +10,12 @@
 </head>
 <body>
     <div class="container mt-sm-5">
+        <h1>To-Do List</h1>
+    {% for task in task_list %}
+        <h3>{{ task.pk }}. {{ task.status }}</h3>
+        <p>{{ task.description }} | {{ task.completion_time }}</p>
+    {% endfor %}
+    <a href="/task/add/">Добавить задачу.</a>
         <form action="/" method="post">
             {% csrf_token %}
             <div class="form-group row padding">
