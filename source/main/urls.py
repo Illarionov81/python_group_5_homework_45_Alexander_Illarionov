@@ -20,5 +20,5 @@ from webapp.views import task_list, task_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', task_list),
-    path('task/add/', task_view),
+    path('task/', task_view),
 ]

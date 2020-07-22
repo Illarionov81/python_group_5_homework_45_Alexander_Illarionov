@@ -9,24 +9,23 @@
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
 <body>
-    <div class="container mt-sm-5">
-        <h1>My first Blog</h1>
-    {% for to_do in to_do_list %}
-        <h3>{{ to_do.pk }}. {{ to_do.status }}</h3>
-        <p>{{ to_do.description }} | {{ to_do.completion_time }}</p>
-    {% endfor %}
-    <a href="/to_do/add/">Добавить задачу.</a>
-        <form action="/" method="post">
-            {% csrf_token %}
-            <div class="form-group row padding">
-                <div class="col-sm-2 col-form-label"></div>
-                <div class="col-sm-2">
-                    <button type="submit"  class="btn btn-primary">Delete</button>
-                </div>
+<div class="container mt-sm-5">
+    <h1>Task:</h1>
+    <p>Task Status: {{ task.status }}</p>
+    <p>Description: {{ task.description }}</p>
+    <p>Complete to: {{ task.completion_time }}</p>
+    <form action="/" method="post">
+        {% csrf_token %}
+        <div class="form-group row padding">
+            <div class="col-sm-2">
+                <a href="/"><button type="submit"  class="btn btn-primary">На главную</button></a>
             </div>
-        </form>
-        <p><h3></h3></p>
-    </div>
+            <div class="col-sm-2">
+                <button type="submit"  class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
