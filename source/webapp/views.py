@@ -16,6 +16,15 @@ def tasks_view(request):
     context = {'task': task}
     return render(request, "task.html", context)
 
+def task_delete_view(request):
+    task_id = request.GET.get('pk')
+    task = To_Do_list.objects.get(pk=task_id)
+    task.delete()
+    data = To_Do_list.objects.all()
+    return render(request, 'index_to_do.html', context={
+        'task_list': data
+    })
+
 
 def task_add_view(request):
     if request.method == "GET":
@@ -24,8 +33,7 @@ def task_add_view(request):
         })
     elif request.method == 'POST':
         description = request.POST.get('description')
-        completion_time = request.POST.get('completion_time')
-        print(completion_time)
+        completion_time = request.POST.get('completion_time', None)
         status = request.POST.get('status')
         task = To_Do_list.objects.create(description=description,
                                          completion_time=completion_time,

@@ -14,17 +14,15 @@
     <p>Task Status: {{ task.status }}</p>
     <p>Description: {{ task.description }}</p>
     <p>Complete to: {{ task.completion_time }}</p>
-    <form action="/" method="post">
         {% csrf_token %}
         <div class="form-group row padding">
             <div class="col-sm-2">
-                <a href="/"><button type="submit"  class="btn btn-primary">На главную</button></a>
+                <a href="/task/delete/?pk={{ task.pk }}" ><button type="submit"  class="btn btn-primary">Delete!</button></a>
             </div>
             <div class="col-sm-2">
-                <button type="submit"  class="btn btn-primary">Delete</button>
+                <a href="/"><button type="submit"  class="btn btn-primary">На главную</button></a>
             </div>
         </div>
-    </form>
 </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

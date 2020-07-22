@@ -15,6 +15,7 @@
             <h3>{{ task.pk }}. {{ task.status }}</h3>
             <p>{{ task.description }} | {{ task.completion_time }}</p>
             <p><a href="/task/?pk={{ task.pk }}">Подробнее...</a></p>
+            <p><a href="/task/delete/?pk={{ task.pk }}" ><button type="submit"  class="btn btn-primary">Delete!</button></a></p>
         {% endfor %}
         <a href="/task/add/">Добавить задачу.</a>
     </div>
