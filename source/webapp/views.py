@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from webapp.models import To_Do_list
-
+from webapp.models import To_Do_list, STATUS_CHOICES
+from django.http import HttpResponseNotAllowed
 
 
 def task_list(request):
@@ -9,8 +9,28 @@ def task_list(request):
         'task_list': data
     })
 
-def task_view(request):
+
+def tasks_view(request):
     task_id = request.GET.get('pk')
     task = To_Do_list.objects.get(pk=task_id)
     context = {'task': task}
     return render(request, "task.html", context)
+
+
+def task_add_view(request):
+    if request.method == "GET":
+        return render(request, 'task_create.html', context={
+            'status_choices': STATUS_CHOICES
+        })
+    elif request.method == 'POST':
+        description = request.POST.get('description')
+        completion_time = request.POST.get('completion_time')
+        print(completion_time)
+        status = request.POST.get('status')
+        task = To_Do_list.objects.create(description=description,
+                                         completion_time=completion_time,
+                                         status=status)
+        context = {'task': task}
+        return render(request, 'task.html', context)
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
