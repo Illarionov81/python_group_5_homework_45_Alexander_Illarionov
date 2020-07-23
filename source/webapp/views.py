@@ -33,11 +33,16 @@ def task_add_view(request):
         })
     elif request.method == 'POST':
         description = request.POST.get('description')
-        completion_time = request.POST.get('completion_time', None)
         status = request.POST.get('status')
-        task = To_Do_list.objects.create(description=description,
-                                         completion_time=completion_time,
-                                         status=status)
+        completion_time = request.POST.get('completion_time', None)
+        if completion_time:
+            task = To_Do_list.objects.create(description=description,
+                                             completion_time=completion_time,
+                                             status=status)
+        else:
+            task = To_Do_list.objects.create(description=description,
+                                             status=status)
+
         context = {'task': task}
         return render(request, 'task.html', context)
     else:
