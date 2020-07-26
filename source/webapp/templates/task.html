@@ -17,10 +17,10 @@
         {% csrf_token %}
         <div class="form-group row padding">
             <div class="col-sm-2">
-                <a href="/task/delete/?pk={{ task.pk }}" ><button type="submit"  class="btn btn-primary">Delete!</button></a>
+                <a href="{% url 'task_delete_view' task.pk %}" ><button type="submit"  class="btn btn-primary">Delete!</button></a>
             </div>
             <div class="col-sm-2">
-                <a href="/"><button type="submit"  class="btn btn-primary">На главную</button></a>
+                <a href="{% url 'task_list' %}"><button type="submit"  class="btn btn-primary">На главную</button></a>
             </div>
         </div>
 </div>

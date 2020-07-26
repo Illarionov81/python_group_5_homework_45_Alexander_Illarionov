@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-dark bg-primary ">
+    <nav class="navbar fixed-top  navbar-dark bg-primary ">
         <div class="container">
-            <a class="navbar-brand " href="/task/add/">Добавить задачу.</a>
+            <a class="navbar-brand " href="{% url 'task_add_view' %}">Добавить задачу.</a>
             <a class="navbar-brand " href="/admin/">Admin</a>
         </div>
     </nav>
@@ -19,11 +19,11 @@
         <h1 class="pt-4"><b>To-Do List:</b></h1>
         <hr>
         {% for task in task_list %}
-            <h3>№ {{ task.pk }}. Status: <b>{{ task.status }}<b></h3>
+            <h3><a href="{% url 'task_view' task.pk %}">№{{ task.pk }}. Status: <b>{{ task.get_status_display }}<b></a> </h3>
             <p>Description: {{ task.description }} </p>
             <p>Time to complete: {{ task.completion_time }}</p>
-            <p><a href="/task/?pk={{ task.pk }}">Подробнее...</a></p>
-            <p><a href="/task/delete/?pk={{ task.pk }}" ><button type="submit"  class="btn btn-primary">Delete!</button></a></p>
+            <p></p>
+            <p><a href="{% url 'task_delete_view' task.pk %}" ><button type="submit"  class="btn btn-primary">Delete!</button></a></p>
             <hr>
         {% endfor %}
         <hr>

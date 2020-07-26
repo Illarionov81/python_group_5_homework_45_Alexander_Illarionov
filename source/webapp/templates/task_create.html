@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container mt-sm-5">
-    <form action="/task/add/" method="post">
+    <form action="{% url 'task_add_view' %}" method="post">
         {% csrf_token %}
         <div class="form-group col-md-6">
             <label for="Status">Status</label>
@@ -33,7 +33,7 @@
         </div>
         <div class="col-sm-2">
             <p>
-                <a href="/" class="c">Return to  Home Page</a>
+                <a href="{% url 'task_list' %}" class="c">Return to  Home Page</a>
             </p>
         </div>
     </form>
