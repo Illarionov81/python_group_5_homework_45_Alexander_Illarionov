@@ -28,15 +28,16 @@ def task_add_view(request):
             'status_choices': STATUS_CHOICES
         })
     elif request.method == 'POST':
+        summary = request.POST.get('summary')
         description = request.POST.get('description')
         status = request.POST.get('status')
         completion_time = request.POST.get('completion_time', None)
         if completion_time:
-            task = To_Do_list.objects.create(description=description,
+            task = To_Do_list.objects.create(summary=summary, description=description,
                                              completion_time=completion_time,
                                              status=status)
         else:
-            task = To_Do_list.objects.create(description=description,
+            task = To_Do_list.objects.create(summary=summary, description=description,
                                              status=status)
         return redirect('task_view', pk=task.pk)
     else:

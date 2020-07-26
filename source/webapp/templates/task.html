@@ -11,8 +11,10 @@
 {% block contant %}
 <div class="col col-lg-6">
     <h1 class="pt-4"><b>Task: </b></h1>
-    <h3><a href="{% url 'task_view' task.pk %}">№{{ task.pk }}. Status: <b>{{ task.get_status_display }}<b></a> </h3>
-    <p>Description: {{ task.description }} </p>
+    <h3>№{{ task.pk }}. Status: <b class="text-primary">{{ task.get_status_display }}</b></h3>
+    <p>Summary : {{ task.summary }}</p>
+    <p>Description:  </p>
+    <p>{{ task.description|linebreaksbr }}</p>
     <p>Time to complete: {{ task.completion_time }}</p>
 </div>
     <hr>
