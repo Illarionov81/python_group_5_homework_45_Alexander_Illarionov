@@ -6,6 +6,9 @@
 <li class="nav-item px-3">
     <a class="navbar-brand"  href="{% url 'task_delete_view' task.pk %}" >Удалить</a>
 </li>
+<li class="nav-item px-3">
+    <a class="navbar-brand"  href="{% url 'task_update_view' task.pk %}" >Редактировать</a>
+</li>
 {% endblock %}
 
 {% block contant %}
@@ -14,7 +17,9 @@
     <h3>№{{ task.pk }}. Status: <b class="text-primary">{{ task.get_status_display }}</b></h3>
     <p>Summary : {{ task.summary }}</p>
     <p>Description:  </p>
-    <p>{{ task.description|linebreaksbr }}</p>
+    <pre>
+        {{ task.description|linebreaks }}
+    </pre>
     <p>Time to complete: {{ task.completion_time }}</p>
 </div>
     <hr>

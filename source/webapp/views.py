@@ -42,3 +42,19 @@ def task_add_view(request):
         return redirect('task_view', pk=task.pk)
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
+def task_update_view(request, pk):
+    task = get_object_or_404(To_Do_list, pk=pk)
+    if request.method == "GET":
+        return render(request, 'task_update.html', context={'status_choices': STATUS_CHOICES, 'task': task})
+    elif request.method == 'POST':
+        task.summary = request.POST.get('summary')
+        task.description = request.POST.get('description')
+        task.status = request.POST.get('status')
+        completion_time = request.POST.get('completion_time')
+        if completion_time:
+            task.completion_time = request.POST.get('completion_time')
+        task.save()
+        return redirect('task_view', pk=task.pk)
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
