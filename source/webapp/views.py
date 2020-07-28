@@ -18,8 +18,11 @@ def task_view(request, pk):
 
 def task_delete_view(request, pk):
     task = get_object_or_404(To_Do_list, pk=pk)
-    task.delete()
-    return redirect("task_list")
+    if request.method == 'GET':
+        return render(request, 'delete.html', context={'task': task})
+    elif request.method == 'POST':
+        task.delete()
+        return redirect("task_list")
 
 
 def task_add_view(request):
