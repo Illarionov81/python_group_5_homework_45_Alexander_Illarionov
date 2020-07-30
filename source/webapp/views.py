@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from webapp.models import To_Do_list, STATUS_CHOICES
+from webapp.forms import TaskForm
 from django.http import HttpResponseNotAllowed
 
 
@@ -25,38 +26,52 @@ def task_delete_view(request, pk):
         return redirect("task_list")
 
 
-def task_add_view(request):
+def task_create_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, 'task_create.html', context={
-            'status_choices': STATUS_CHOICES
+            'form': TaskForm()
         })
     elif request.method == 'POST':
-        summary = request.POST.get('summary')
-        description = request.POST.get('description')
-        status = request.POST.get('status')
-        completion_time = request.POST.get('completion_time', None)
-        if completion_time:
-            task = To_Do_list.objects.create(summary=summary, description=description,
-                                             completion_time=completion_time,
-                                             status=status)
+        form = TaskForm(data=request.POST)
+        if form.is_valid():
+            summary = form.cleaned_data['summary']
+            description = form.cleaned_data['description']
+            status = form.cleaned_data['status']
+            completion_time = form.cleaned_data['completion_time']
+            if completion_time:
+                task = To_Do_list.objects.create(summary=summary, description=description,
+                                                 completion_time=completion_time,
+                                                 status=status)
+            else:
+                task = To_Do_list.objects.create(summary=summary, description=description,
+                                                 status=status)
+            return redirect('task_view', pk=task.pk)
         else:
-            task = To_Do_list.objects.create(summary=summary, description=description,
-                                             status=status)
-        return redirect('task_view', pk=task.pk)
+            return render(request, 'task_create.html', context={'form': form})
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
 
 def task_update_view(request, pk):
     task = get_object_or_404(To_Do_list, pk=pk)
     if request.method == "GET":
         return render(request, 'task_update.html', context={'status_choices': STATUS_CHOICES, 'task': task})
     elif request.method == 'POST':
+        errors = {}
         task.summary = request.POST.get('summary')
+        if not task.summary:
+            errors['summary'] = 'Это поле обязательне для сохранения!'
         task.description = request.POST.get('description')
         task.status = request.POST.get('status')
+        if not task.status:
+            errors['status'] = 'Это поле обязательне для сохранения!'
         completion_time = request.POST.get('completion_time')
         if completion_time:
             task.completion_time = request.POST.get('completion_time')
+        if errors:
+            return render(request, 'task_update.html', context={'status_choices': STATUS_CHOICES,
+                                                                'task': task,
+                                                                'errors': errors})
         task.save()
         return redirect('task_view', pk=task.pk)
     else:
